@@ -1,0 +1,40 @@
+--------------------------------------------------
+
+npm init
+npm install web3@0.20.0 solc@0.4.18
+
+--------------------------------------------------
+
+node
+Web3 = require('web3')
+web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"))
+web3.eth.accounts
+solc = require('solc')
+sourceCode =  fs.readFileSync('CompraVenda.sol').toString()
+compiledCode = solc.compile(sourceCode)
+contractABI = JSON.parse(compiledCode.contracts[':CompraVenda'].interface)
+helloContract = web3.eth.contract(contractABI)
+byteCode = compiledCode.contracts[':CompraVenda'].bytecode
+helloDeployed = helloContract.new({data:byteCode, from:web3.eth.accounts[0], gas:4700000})
+helloDeployed.address
+helloInstance =  helloContract.at(helloDeployed.address)
+helloInstance.getMessage()
+helloInstance.setMessage("oi", {from: web3.eth.accounts[0]})
+.exit
+
+--------------------------------------------------
+
+node
+Web3 = require('web3')
+web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"))
+solc = require('solc')
+sourceCode =  fs.readFileSync('CompraVenda.sol').toString()
+compiledCode = solc.compile(sourceCode)
+contractABI = JSON.parse(compiledCode.contracts[':CompraVenda'].interface)
+compraVendaContract = web3.eth.contract(contractABI)
+byteCode = compiledCode.contracts[':CompraVenda'].bytecode
+compraVendaDeployed = compraVendaContract.new({data:byteCode, from:web3.eth.accounts[0], gas:4700000})
+compraVendaInstance =  compraVendaContract.at(compraVendaDeployed.address)
+compraVendaDeployed.address
+
+--------------------------------------------------

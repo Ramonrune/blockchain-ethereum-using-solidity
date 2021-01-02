@@ -1,0 +1,1 @@
+geth --datadir . --nodiscover --mine --minerthreads 2 --rpcapi eth,web3,personal,net --unlock 0 --password ./password.sec
